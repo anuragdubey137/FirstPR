@@ -37,12 +37,28 @@ model Preference {
 model Bookmark {
   id String @id @default(cuid())
   userId String
-  repoName String
+
+  issueId String
   issueTitle String
   issueUrl String
+
+  repoName String
+  repoUrl String?
+
+  status BookmarkStatus @default(SAVED)
+
   createdAt DateTime @default(now())
 
   user User @relation(fields: [userId], references: [id])
+
+  @@unique([userId, issueId])
+  @@index([userId])
+}
+
+enum BookmarkStatus {
+  SAVED
+  WORKING
+  COMPLETED
 }
 
 enum ExperienceLevel {

@@ -127,6 +127,23 @@ export type EnumExperienceLevelWithAggregatesFilter<$PrismaModel = never> = {
   _max?: Prisma.NestedEnumExperienceLevelFilter<$PrismaModel>
 }
 
+export type EnumBookmarkStatusFilter<$PrismaModel = never> = {
+  equals?: $Enums.BookmarkStatus | Prisma.EnumBookmarkStatusFieldRefInput<$PrismaModel>
+  in?: $Enums.BookmarkStatus[] | Prisma.ListEnumBookmarkStatusFieldRefInput<$PrismaModel>
+  notIn?: $Enums.BookmarkStatus[] | Prisma.ListEnumBookmarkStatusFieldRefInput<$PrismaModel>
+  not?: Prisma.NestedEnumBookmarkStatusFilter<$PrismaModel> | $Enums.BookmarkStatus
+}
+
+export type EnumBookmarkStatusWithAggregatesFilter<$PrismaModel = never> = {
+  equals?: $Enums.BookmarkStatus | Prisma.EnumBookmarkStatusFieldRefInput<$PrismaModel>
+  in?: $Enums.BookmarkStatus[] | Prisma.ListEnumBookmarkStatusFieldRefInput<$PrismaModel>
+  notIn?: $Enums.BookmarkStatus[] | Prisma.ListEnumBookmarkStatusFieldRefInput<$PrismaModel>
+  not?: Prisma.NestedEnumBookmarkStatusWithAggregatesFilter<$PrismaModel> | $Enums.BookmarkStatus
+  _count?: Prisma.NestedIntFilter<$PrismaModel>
+  _min?: Prisma.NestedEnumBookmarkStatusFilter<$PrismaModel>
+  _max?: Prisma.NestedEnumBookmarkStatusFilter<$PrismaModel>
+}
+
 export type NestedStringFilter<$PrismaModel = never> = {
   equals?: string | Prisma.StringFieldRefInput<$PrismaModel>
   in?: string[] | Prisma.ListStringFieldRefInput<$PrismaModel>
@@ -251,6 +268,23 @@ export type NestedEnumExperienceLevelWithAggregatesFilter<$PrismaModel = never> 
   _count?: Prisma.NestedIntFilter<$PrismaModel>
   _min?: Prisma.NestedEnumExperienceLevelFilter<$PrismaModel>
   _max?: Prisma.NestedEnumExperienceLevelFilter<$PrismaModel>
+}
+
+export type NestedEnumBookmarkStatusFilter<$PrismaModel = never> = {
+  equals?: $Enums.BookmarkStatus | Prisma.EnumBookmarkStatusFieldRefInput<$PrismaModel>
+  in?: $Enums.BookmarkStatus[] | Prisma.ListEnumBookmarkStatusFieldRefInput<$PrismaModel>
+  notIn?: $Enums.BookmarkStatus[] | Prisma.ListEnumBookmarkStatusFieldRefInput<$PrismaModel>
+  not?: Prisma.NestedEnumBookmarkStatusFilter<$PrismaModel> | $Enums.BookmarkStatus
+}
+
+export type NestedEnumBookmarkStatusWithAggregatesFilter<$PrismaModel = never> = {
+  equals?: $Enums.BookmarkStatus | Prisma.EnumBookmarkStatusFieldRefInput<$PrismaModel>
+  in?: $Enums.BookmarkStatus[] | Prisma.ListEnumBookmarkStatusFieldRefInput<$PrismaModel>
+  notIn?: $Enums.BookmarkStatus[] | Prisma.ListEnumBookmarkStatusFieldRefInput<$PrismaModel>
+  not?: Prisma.NestedEnumBookmarkStatusWithAggregatesFilter<$PrismaModel> | $Enums.BookmarkStatus
+  _count?: Prisma.NestedIntFilter<$PrismaModel>
+  _min?: Prisma.NestedEnumBookmarkStatusFilter<$PrismaModel>
+  _max?: Prisma.NestedEnumBookmarkStatusFilter<$PrismaModel>
 }
 
 

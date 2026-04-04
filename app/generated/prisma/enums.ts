@@ -9,6 +9,15 @@
 * 🟢 You can import this file directly.
 */
 
+export const BookmarkStatus = {
+  SAVED: 'SAVED',
+  WORKING: 'WORKING',
+  COMPLETED: 'COMPLETED'
+} as const
+
+export type BookmarkStatus = (typeof BookmarkStatus)[keyof typeof BookmarkStatus]
+
+
 export const ExperienceLevel = {
   BEGINNER: 'BEGINNER',
   INTERMEDIATE: 'INTERMEDIATE',

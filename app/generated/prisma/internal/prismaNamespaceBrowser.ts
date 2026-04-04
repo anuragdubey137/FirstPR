@@ -97,9 +97,12 @@ export type PreferenceScalarFieldEnum = (typeof PreferenceScalarFieldEnum)[keyof
 export const BookmarkScalarFieldEnum = {
   id: 'id',
   userId: 'userId',
-  repoName: 'repoName',
+  issueId: 'issueId',
   issueTitle: 'issueTitle',
   issueUrl: 'issueUrl',
+  repoName: 'repoName',
+  repoUrl: 'repoUrl',
+  status: 'status',
   createdAt: 'createdAt'
 } as const
 

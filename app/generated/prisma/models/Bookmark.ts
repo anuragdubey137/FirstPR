@@ -27,27 +27,36 @@ export type AggregateBookmark = {
 export type BookmarkMinAggregateOutputType = {
   id: string | null
   userId: string | null
-  repoName: string | null
+  issueId: string | null
   issueTitle: string | null
   issueUrl: string | null
+  repoName: string | null
+  repoUrl: string | null
+  status: $Enums.BookmarkStatus | null
   createdAt: Date | null
 }
 
 export type BookmarkMaxAggregateOutputType = {
   id: string | null
   userId: string | null
-  repoName: string | null
+  issueId: string | null
   issueTitle: string | null
   issueUrl: string | null
+  repoName: string | null
+  repoUrl: string | null
+  status: $Enums.BookmarkStatus | null
   createdAt: Date | null
 }
 
 export type BookmarkCountAggregateOutputType = {
   id: number
   userId: number
-  repoName: number
+  issueId: number
   issueTitle: number
   issueUrl: number
+  repoName: number
+  repoUrl: number
+  status: number
   createdAt: number
   _all: number
 }
@@ -56,27 +65,36 @@ export type BookmarkCountAggregateOutputType = {
 export type BookmarkMinAggregateInputType = {
   id?: true
   userId?: true
-  repoName?: true
+  issueId?: true
   issueTitle?: true
   issueUrl?: true
+  repoName?: true
+  repoUrl?: true
+  status?: true
   createdAt?: true
 }
 
 export type BookmarkMaxAggregateInputType = {
   id?: true
   userId?: true
-  repoName?: true
+  issueId?: true
   issueTitle?: true
   issueUrl?: true
+  repoName?: true
+  repoUrl?: true
+  status?: true
   createdAt?: true
 }
 
 export type BookmarkCountAggregateInputType = {
   id?: true
   userId?: true
-  repoName?: true
+  issueId?: true
   issueTitle?: true
   issueUrl?: true
+  repoName?: true
+  repoUrl?: true
+  status?: true
   createdAt?: true
   _all?: true
 }
@@ -156,9 +174,12 @@ export type BookmarkGroupByArgs<ExtArgs extends runtime.Types.Extensions.Interna
 export type BookmarkGroupByOutputType = {
   id: string
   userId: string
-  repoName: string
+  issueId: string
   issueTitle: string
   issueUrl: string
+  repoName: string
+  repoUrl: string | null
+  status: $Enums.BookmarkStatus
   createdAt: Date
   _count: BookmarkCountAggregateOutputType | null
   _min: BookmarkMinAggregateOutputType | null
@@ -186,9 +207,12 @@ export type BookmarkWhereInput = {
   NOT?: Prisma.BookmarkWhereInput | Prisma.BookmarkWhereInput[]
   id?: Prisma.StringFilter<"Bookmark"> | string
   userId?: Prisma.StringFilter<"Bookmark"> | string
-  repoName?: Prisma.StringFilter<"Bookmark"> | string
+  issueId?: Prisma.StringFilter<"Bookmark"> | string
   issueTitle?: Prisma.StringFilter<"Bookmark"> | string
   issueUrl?: Prisma.StringFilter<"Bookmark"> | string
+  repoName?: Prisma.StringFilter<"Bookmark"> | string
+  repoUrl?: Prisma.StringNullableFilter<"Bookmark"> | string | null
+  status?: Prisma.EnumBookmarkStatusFilter<"Bookmark"> | $Enums.BookmarkStatus
   createdAt?: Prisma.DateTimeFilter<"Bookmark"> | Date | string
   user?: Prisma.XOR<Prisma.UserScalarRelationFilter, Prisma.UserWhereInput>
 }
@@ -196,32 +220,42 @@ export type BookmarkWhereInput = {
 export type BookmarkOrderByWithRelationInput = {
   id?: Prisma.SortOrder
   userId?: Prisma.SortOrder
-  repoName?: Prisma.SortOrder
+  issueId?: Prisma.SortOrder
   issueTitle?: Prisma.SortOrder
   issueUrl?: Prisma.SortOrder
+  repoName?: Prisma.SortOrder
+  repoUrl?: Prisma.SortOrderInput | Prisma.SortOrder
+  status?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   user?: Prisma.UserOrderByWithRelationInput
 }
 
 export type BookmarkWhereUniqueInput = Prisma.AtLeast<{
   id?: string
+  userId_issueId?: Prisma.BookmarkUserIdIssueIdCompoundUniqueInput
   AND?: Prisma.BookmarkWhereInput | Prisma.BookmarkWhereInput[]
   OR?: Prisma.BookmarkWhereInput[]
   NOT?: Prisma.BookmarkWhereInput | Prisma.BookmarkWhereInput[]
   userId?: Prisma.StringFilter<"Bookmark"> | string
-  repoName?: Prisma.StringFilter<"Bookmark"> | string
+  issueId?: Prisma.StringFilter<"Bookmark"> | string
   issueTitle?: Prisma.StringFilter<"Bookmark"> | string
   issueUrl?: Prisma.StringFilter<"Bookmark"> | string
+  repoName?: Prisma.StringFilter<"Bookmark"> | string
+  repoUrl?: Prisma.StringNullableFilter<"Bookmark"> | string | null
+  status?: Prisma.EnumBookmarkStatusFilter<"Bookmark"> | $Enums.BookmarkStatus
   createdAt?: Prisma.DateTimeFilter<"Bookmark"> | Date | string
   user?: Prisma.XOR<Prisma.UserScalarRelationFilter, Prisma.UserWhereInput>
-}, "id">
+}, "id" | "userId_issueId">
 
 export type BookmarkOrderByWithAggregationInput = {
   id?: Prisma.SortOrder
   userId?: Prisma.SortOrder
-  repoName?: Prisma.SortOrder
+  issueId?: Prisma.SortOrder
   issueTitle?: Prisma.SortOrder
   issueUrl?: Prisma.SortOrder
+  repoName?: Prisma.SortOrder
+  repoUrl?: Prisma.SortOrderInput | Prisma.SortOrder
+  status?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   _count?: Prisma.BookmarkCountOrderByAggregateInput
   _max?: Prisma.BookmarkMaxOrderByAggregateInput
@@ -234,17 +268,23 @@ export type BookmarkScalarWhereWithAggregatesInput = {
   NOT?: Prisma.BookmarkScalarWhereWithAggregatesInput | Prisma.BookmarkScalarWhereWithAggregatesInput[]
   id?: Prisma.StringWithAggregatesFilter<"Bookmark"> | string
   userId?: Prisma.StringWithAggregatesFilter<"Bookmark"> | string
-  repoName?: Prisma.StringWithAggregatesFilter<"Bookmark"> | string
+  issueId?: Prisma.StringWithAggregatesFilter<"Bookmark"> | string
   issueTitle?: Prisma.StringWithAggregatesFilter<"Bookmark"> | string
   issueUrl?: Prisma.StringWithAggregatesFilter<"Bookmark"> | string
+  repoName?: Prisma.StringWithAggregatesFilter<"Bookmark"> | string
+  repoUrl?: Prisma.StringNullableWithAggregatesFilter<"Bookmark"> | string | null
+  status?: Prisma.EnumBookmarkStatusWithAggregatesFilter<"Bookmark"> | $Enums.BookmarkStatus
   createdAt?: Prisma.DateTimeWithAggregatesFilter<"Bookmark"> | Date | string
 }
 
 export type BookmarkCreateInput = {
   id?: string
-  repoName: string
+  issueId: string
   issueTitle: string
   issueUrl: string
+  repoName: string
+  repoUrl?: string | null
+  status?: $Enums.BookmarkStatus
   createdAt?: Date | string
   user: Prisma.UserCreateNestedOneWithoutBookmarksInput
 }
@@ -252,17 +292,23 @@ export type BookmarkCreateInput = {
 export type BookmarkUncheckedCreateInput = {
   id?: string
   userId: string
-  repoName: string
+  issueId: string
   issueTitle: string
   issueUrl: string
+  repoName: string
+  repoUrl?: string | null
+  status?: $Enums.BookmarkStatus
   createdAt?: Date | string
 }
 
 export type BookmarkUpdateInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
-  repoName?: Prisma.StringFieldUpdateOperationsInput | string
+  issueId?: Prisma.StringFieldUpdateOperationsInput | string
   issueTitle?: Prisma.StringFieldUpdateOperationsInput | string
   issueUrl?: Prisma.StringFieldUpdateOperationsInput | string
+  repoName?: Prisma.StringFieldUpdateOperationsInput | string
+  repoUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  status?: Prisma.EnumBookmarkStatusFieldUpdateOperationsInput | $Enums.BookmarkStatus
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   user?: Prisma.UserUpdateOneRequiredWithoutBookmarksNestedInput
 }
@@ -270,35 +316,47 @@ export type BookmarkUpdateInput = {
 export type BookmarkUncheckedUpdateInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   userId?: Prisma.StringFieldUpdateOperationsInput | string
-  repoName?: Prisma.StringFieldUpdateOperationsInput | string
+  issueId?: Prisma.StringFieldUpdateOperationsInput | string
   issueTitle?: Prisma.StringFieldUpdateOperationsInput | string
   issueUrl?: Prisma.StringFieldUpdateOperationsInput | string
+  repoName?: Prisma.StringFieldUpdateOperationsInput | string
+  repoUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  status?: Prisma.EnumBookmarkStatusFieldUpdateOperationsInput | $Enums.BookmarkStatus
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
 
 export type BookmarkCreateManyInput = {
   id?: string
   userId: string
-  repoName: string
+  issueId: string
   issueTitle: string
   issueUrl: string
+  repoName: string
+  repoUrl?: string | null
+  status?: $Enums.BookmarkStatus
   createdAt?: Date | string
 }
 
 export type BookmarkUpdateManyMutationInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
-  repoName?: Prisma.StringFieldUpdateOperationsInput | string
+  issueId?: Prisma.StringFieldUpdateOperationsInput | string
   issueTitle?: Prisma.StringFieldUpdateOperationsInput | string
   issueUrl?: Prisma.StringFieldUpdateOperationsInput | string
+  repoName?: Prisma.StringFieldUpdateOperationsInput | string
+  repoUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  status?: Prisma.EnumBookmarkStatusFieldUpdateOperationsInput | $Enums.BookmarkStatus
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
 
 export type BookmarkUncheckedUpdateManyInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   userId?: Prisma.StringFieldUpdateOperationsInput | string
-  repoName?: Prisma.StringFieldUpdateOperationsInput | string
+  issueId?: Prisma.StringFieldUpdateOperationsInput | string
   issueTitle?: Prisma.StringFieldUpdateOperationsInput | string
   issueUrl?: Prisma.StringFieldUpdateOperationsInput | string
+  repoName?: Prisma.StringFieldUpdateOperationsInput | string
+  repoUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  status?: Prisma.EnumBookmarkStatusFieldUpdateOperationsInput | $Enums.BookmarkStatus
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
 
@@ -312,30 +370,44 @@ export type BookmarkOrderByRelationAggregateInput = {
   _count?: Prisma.SortOrder
 }
 
+export type BookmarkUserIdIssueIdCompoundUniqueInput = {
+  userId: string
+  issueId: string
+}
+
 export type BookmarkCountOrderByAggregateInput = {
   id?: Prisma.SortOrder
   userId?: Prisma.SortOrder
-  repoName?: Prisma.SortOrder
+  issueId?: Prisma.SortOrder
   issueTitle?: Prisma.SortOrder
   issueUrl?: Prisma.SortOrder
+  repoName?: Prisma.SortOrder
+  repoUrl?: Prisma.SortOrder
+  status?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
 }
 
 export type BookmarkMaxOrderByAggregateInput = {
   id?: Prisma.SortOrder
   userId?: Prisma.SortOrder
-  repoName?: Prisma.SortOrder
+  issueId?: Prisma.SortOrder
   issueTitle?: Prisma.SortOrder
   issueUrl?: Prisma.SortOrder
+  repoName?: Prisma.SortOrder
+  repoUrl?: Prisma.SortOrder
+  status?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
 }
 
 export type BookmarkMinOrderByAggregateInput = {
   id?: Prisma.SortOrder
   userId?: Prisma.SortOrder
-  repoName?: Prisma.SortOrder
+  issueId?: Prisma.SortOrder
   issueTitle?: Prisma.SortOrder
   issueUrl?: Prisma.SortOrder
+  repoName?: Prisma.SortOrder
+  repoUrl?: Prisma.SortOrder
+  status?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
 }
 
@@ -381,19 +453,29 @@ export type BookmarkUncheckedUpdateManyWithoutUserNestedInput = {
   deleteMany?: Prisma.BookmarkScalarWhereInput | Prisma.BookmarkScalarWhereInput[]
 }
 
+export type EnumBookmarkStatusFieldUpdateOperationsInput = {
+  set?: $Enums.BookmarkStatus
+}
+
 export type BookmarkCreateWithoutUserInput = {
   id?: string
-  repoName: string
+  issueId: string
   issueTitle: string
   issueUrl: string
+  repoName: string
+  repoUrl?: string | null
+  status?: $Enums.BookmarkStatus
   createdAt?: Date | string
 }
 
 export type BookmarkUncheckedCreateWithoutUserInput = {
   id?: string
-  repoName: string
+  issueId: string
   issueTitle: string
   issueUrl: string
+  repoName: string
+  repoUrl?: string | null
+  status?: $Enums.BookmarkStatus
   createdAt?: Date | string
 }
 
@@ -429,41 +511,56 @@ export type BookmarkScalarWhereInput = {
   NOT?: Prisma.BookmarkScalarWhereInput | Prisma.BookmarkScalarWhereInput[]
   id?: Prisma.StringFilter<"Bookmark"> | string
   userId?: Prisma.StringFilter<"Bookmark"> | string
-  repoName?: Prisma.StringFilter<"Bookmark"> | string
+  issueId?: Prisma.StringFilter<"Bookmark"> | string
   issueTitle?: Prisma.StringFilter<"Bookmark"> | string
   issueUrl?: Prisma.StringFilter<"Bookmark"> | string
+  repoName?: Prisma.StringFilter<"Bookmark"> | string
+  repoUrl?: Prisma.StringNullableFilter<"Bookmark"> | string | null
+  status?: Prisma.EnumBookmarkStatusFilter<"Bookmark"> | $Enums.BookmarkStatus
   createdAt?: Prisma.DateTimeFilter<"Bookmark"> | Date | string
 }
 
 export type BookmarkCreateManyUserInput = {
   id?: string
-  repoName: string
+  issueId: string
   issueTitle: string
   issueUrl: string
+  repoName: string
+  repoUrl?: string | null
+  status?: $Enums.BookmarkStatus
   createdAt?: Date | string
 }
 
 export type BookmarkUpdateWithoutUserInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
-  repoName?: Prisma.StringFieldUpdateOperationsInput | string
+  issueId?: Prisma.StringFieldUpdateOperationsInput | string
   issueTitle?: Prisma.StringFieldUpdateOperationsInput | string
   issueUrl?: Prisma.StringFieldUpdateOperationsInput | string
+  repoName?: Prisma.StringFieldUpdateOperationsInput | string
+  repoUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  status?: Prisma.EnumBookmarkStatusFieldUpdateOperationsInput | $Enums.BookmarkStatus
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
 
 export type BookmarkUncheckedUpdateWithoutUserInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
-  repoName?: Prisma.StringFieldUpdateOperationsInput | string
+  issueId?: Prisma.StringFieldUpdateOperationsInput | string
   issueTitle?: Prisma.StringFieldUpdateOperationsInput | string
   issueUrl?: Prisma.StringFieldUpdateOperationsInput | string
+  repoName?: Prisma.StringFieldUpdateOperationsInput | string
+  repoUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  status?: Prisma.EnumBookmarkStatusFieldUpdateOperationsInput | $Enums.BookmarkStatus
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
 
 export type BookmarkUncheckedUpdateManyWithoutUserInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
-  repoName?: Prisma.StringFieldUpdateOperationsInput | string
+  issueId?: Prisma.StringFieldUpdateOperationsInput | string
   issueTitle?: Prisma.StringFieldUpdateOperationsInput | string
   issueUrl?: Prisma.StringFieldUpdateOperationsInput | string
+  repoName?: Prisma.StringFieldUpdateOperationsInput | string
+  repoUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  status?: Prisma.EnumBookmarkStatusFieldUpdateOperationsInput | $Enums.BookmarkStatus
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
 
@@ -472,9 +569,12 @@ export type BookmarkUncheckedUpdateManyWithoutUserInput = {
 export type BookmarkSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
   userId?: boolean
-  repoName?: boolean
+  issueId?: boolean
   issueTitle?: boolean
   issueUrl?: boolean
+  repoName?: boolean
+  repoUrl?: boolean
+  status?: boolean
   createdAt?: boolean
   user?: boolean | Prisma.UserDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["bookmark"]>
@@ -482,9 +582,12 @@ export type BookmarkSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs
 export type BookmarkSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
   userId?: boolean
-  repoName?: boolean
+  issueId?: boolean
   issueTitle?: boolean
   issueUrl?: boolean
+  repoName?: boolean
+  repoUrl?: boolean
+  status?: boolean
   createdAt?: boolean
   user?: boolean | Prisma.UserDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["bookmark"]>
@@ -492,9 +595,12 @@ export type BookmarkSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Exte
 export type BookmarkSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
   userId?: boolean
-  repoName?: boolean
+  issueId?: boolean
   issueTitle?: boolean
   issueUrl?: boolean
+  repoName?: boolean
+  repoUrl?: boolean
+  status?: boolean
   createdAt?: boolean
   user?: boolean | Prisma.UserDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["bookmark"]>
@@ -502,13 +608,16 @@ export type BookmarkSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Exte
 export type BookmarkSelectScalar = {
   id?: boolean
   userId?: boolean
-  repoName?: boolean
+  issueId?: boolean
   issueTitle?: boolean
   issueUrl?: boolean
+  repoName?: boolean
+  repoUrl?: boolean
+  status?: boolean
   createdAt?: boolean
 }
 
-export type BookmarkOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "userId" | "repoName" | "issueTitle" | "issueUrl" | "createdAt", ExtArgs["result"]["bookmark"]>
+export type BookmarkOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "userId" | "issueId" | "issueTitle" | "issueUrl" | "repoName" | "repoUrl" | "status" | "createdAt", ExtArgs["result"]["bookmark"]>
 export type BookmarkInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   user?: boolean | Prisma.UserDefaultArgs<ExtArgs>
 }
@@ -527,9 +636,12 @@ export type $BookmarkPayload<ExtArgs extends runtime.Types.Extensions.InternalAr
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: string
     userId: string
-    repoName: string
+    issueId: string
     issueTitle: string
     issueUrl: string
+    repoName: string
+    repoUrl: string | null
+    status: $Enums.BookmarkStatus
     createdAt: Date
   }, ExtArgs["result"]["bookmark"]>
   composites: {}
@@ -957,9 +1069,12 @@ export interface Prisma__BookmarkClient<T, Null = never, ExtArgs extends runtime
 export interface BookmarkFieldRefs {
   readonly id: Prisma.FieldRef<"Bookmark", 'String'>
   readonly userId: Prisma.FieldRef<"Bookmark", 'String'>
-  readonly repoName: Prisma.FieldRef<"Bookmark", 'String'>
+  readonly issueId: Prisma.FieldRef<"Bookmark", 'String'>
   readonly issueTitle: Prisma.FieldRef<"Bookmark", 'String'>
   readonly issueUrl: Prisma.FieldRef<"Bookmark", 'String'>
+  readonly repoName: Prisma.FieldRef<"Bookmark", 'String'>
+  readonly repoUrl: Prisma.FieldRef<"Bookmark", 'String'>
+  readonly status: Prisma.FieldRef<"Bookmark", 'BookmarkStatus'>
   readonly createdAt: Prisma.FieldRef<"Bookmark", 'DateTime'>
 }
     

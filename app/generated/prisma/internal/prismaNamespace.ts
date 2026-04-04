@@ -692,9 +692,12 @@ export type PreferenceScalarFieldEnum = (typeof PreferenceScalarFieldEnum)[keyof
 export const BookmarkScalarFieldEnum = {
   id: 'id',
   userId: 'userId',
-  repoName: 'repoName',
+  issueId: 'issueId',
   issueTitle: 'issueTitle',
   issueUrl: 'issueUrl',
+  repoName: 'repoName',
+  repoUrl: 'repoUrl',
+  status: 'status',
   createdAt: 'createdAt'
 } as const
 
@@ -770,6 +773,20 @@ export type EnumExperienceLevelFieldRefInput<$PrismaModel> = FieldRefInputType<$
  * Reference to a field of type 'ExperienceLevel[]'
  */
 export type ListEnumExperienceLevelFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'ExperienceLevel[]'>
+    
+
+
+/**
+ * Reference to a field of type 'BookmarkStatus'
+ */
+export type EnumBookmarkStatusFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'BookmarkStatus'>
+    
+
+
+/**
+ * Reference to a field of type 'BookmarkStatus[]'
+ */
+export type ListEnumBookmarkStatusFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'BookmarkStatus[]'>
     
 
 
