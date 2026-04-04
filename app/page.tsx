@@ -1,18 +1,14 @@
-"use client";
+import Redirect from "@/components/Redirect";
 
-import { signIn, signOut, useSession } from "next-auth/react";
-
-export default function LoginButton() {
-  const { data: session } = useSession();
-
-  if (session) {
-    return (
-      <>
-        <p>{session.user?.name}</p>
-        <button onClick={() => signOut()}>Logout</button>
-      </>
-    );
-  }
-
-  return <button onClick={() => signIn("github")}>Login with GitHub</button>;
+export default function Home(){
+  return (
+    <div>
+        <div>
+          <Redirect/>
+        </div>
+        <div>
+          hello there !!
+        </div>
+    </div>
+  )
 }
