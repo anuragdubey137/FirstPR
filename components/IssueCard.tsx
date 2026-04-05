@@ -1,7 +1,15 @@
-export default function IssueCard({ issue }: any) {
+export default function IssueCard({ issue, isBookmarked, onToggleBookmark }: any) {
   return (
-    <div className="p-4 bg-[#020617] rounded-xl border border-gray-800 hover:border-gray-600 transition">
+    <div className="relative p-4 bg-[#020617] rounded-xl border border-gray-800 hover:border-gray-600 transition">
       
+      {/* ⭐ Star Button */}
+      <button
+        onClick={() => onToggleBookmark(issue)}
+        className="absolute top-3 right-3 text-yellow-400 text-lg"
+      >
+        {isBookmarked ? "⭐" : "☆"}
+      </button>
+
       <p className="text-xs text-gray-400 mb-1">
         {issue.repository_url.split("/").slice(-2).join("/")}
       </p>
