@@ -2,14 +2,9 @@
 
 import { useEffect, useState } from "react";
 import StatsCard from "@/components/StatsCard";
-import { useSession } from "next-auth/react";
 
 export default function DashboardPage() {
   const [data, setData] = useState<any>(null);
-  const [bookmarks, setBookmarks] = useState<any[]>([]);
-
-  const { data: session } = useSession();
-  const userId = session?.user?.id;
 
   // 🔹 Fetch GitHub user data
   useEffect(() => {
@@ -22,19 +17,7 @@ export default function DashboardPage() {
     fetchData();
   }, []);
 
-  // 🔹 Fetch bookmarks
-  useEffect(() => {
-    if (!userId) return;
-
-    async function fetchBookmarks() {
-      const res = await fetch(`/api/bookmarks?userId=${userId}`);
-      const json = await res.json();
-      setBookmarks(json.bookmarks || []);
-    }
-
-    fetchBookmarks();
-  }, [userId]);
-
+  
   if (!data) {
     return <div className="text-gray-400">Loading...</div>;
   }
@@ -68,35 +51,6 @@ export default function DashboardPage() {
         <StatsCard title="Followers" value={data.followers} />
         <StatsCard title="PRs Raised" value={data.prs} />
         <StatsCard title="PRs Merged" value={data.merged_prs} />
-      </div>
-
-      {/* Bookmarked Issues */}
-      <div>
-        <h2 className="text-xl font-semibold mb-2">
-          ⭐ Bookmarked Issues
-        </h2>
-
-        {bookmarks.length === 0 ? (
-          <div className="text-gray-400">
-            No bookmarks yet
-          </div>
-        ) : (
-          <div className="space-y-2">
-            {bookmarks.map((b: any) => (
-              <a
-                key={b.id}
-                href={b.issueUrl}
-                target="_blank"
-                className="block p-3 border border-gray-800 rounded-lg hover:bg-gray-900 transition"
-              >
-                <p className="font-medium">{b.issueTitle}</p>
-                <p className="text-sm text-gray-400">
-                  {b.repoName}
-                </p>
-              </a>
-            ))}
-          </div>
-        )}
       </div>
 
     </div>
