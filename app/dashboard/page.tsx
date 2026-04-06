@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from "react";
 import StatsCard from "@/components/StatsCard";
+import IssueCard from "@/components/IssueCard";
 import { useSession } from "next-auth/react";
 
 export default function DashboardPage() {
@@ -30,11 +31,45 @@ export default function DashboardPage() {
       const res = await fetch(`/api/bookmark?userId=${userId}`);
       const data = await res.json();
 
-      setBookmarks(data.bookmarks);
+      setBookmarks(data.bookmarks || []);
     }
 
     fetchBookmarks();
   }, [userId]);
+
+  // 🔥 Toggle bookmark (REMOVE here)
+  const handleToggleBookmark = async (issue: any) => {
+    if (!userId) return;
+
+    await fetch("/api/bookmark", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        userId,
+        issueId: issue.id,
+        issueTitle: issue.title,
+        issueUrl: issue.html_url,
+        repoName: issue.repository_url.split("/").slice(-2).join("/"),
+      }),
+    });
+
+    // remove from UI instantly
+    setBookmarks((prev) =>
+      prev.filter((b) => b.issueId !== issue.id)
+    );
+  };
+
+  // 🔄 Convert bookmarks → IssueCard format
+  const formattedIssues = bookmarks.map((b) => ({
+    id: b.issueId,
+    title: b.issueTitle,
+    html_url: b.issueUrl,
+    repository_url: `https://api.github.com/repos/${b.repoName}`,
+    labels: [],
+    comments: 0,
+  }));
 
   if (!data) {
     return <div className="text-gray-400">Loading...</div>;
@@ -73,33 +108,23 @@ export default function DashboardPage() {
 
       {/* ⭐ Bookmarks Section */}
       <div>
-        <h2 className="text-xl font-semibold mb-3">⭐ Bookmarked Issues</h2>
+        <h2 className="text-xl font-semibold mb-3">
+          ⭐ Bookmarked Issues
+        </h2>
 
-        {bookmarks.length === 0 ? (
-          <p className="text-gray-400 text-sm">No bookmarks yet</p>
+        {formattedIssues.length === 0 ? (
+          <p className="text-gray-400 text-sm">
+            No bookmarks yet
+          </p>
         ) : (
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-            {bookmarks.map((b) => (
-              <div
-                key={b.issueId}
-                className="p-4 bg-[#020617] rounded-xl border border-gray-800 hover:border-gray-600 transition"
-              >
-                <p className="text-xs text-gray-400 mb-1">
-                  {b.repoName}
-                </p>
-
-                <h3 className="font-semibold line-clamp-2">
-                  {b.issueTitle}
-                </h3>
-
-                <a
-                  href={b.issueUrl}
-                  target="_blank"
-                  className="text-blue-400 text-sm mt-3 inline-block hover:underline"
-                >
-                  View →
-                </a>
-              </div>
+            {formattedIssues.map((issue) => (
+              <IssueCard
+                key={issue.id}
+                issue={issue}
+                isBookmarked={true}
+                onToggleBookmark={handleToggleBookmark}
+              />
             ))}
           </div>
         )}
