@@ -4,7 +4,7 @@ export async function GET(req: Request) {
 
     const level = searchParams.get("level") || "good-first";
     const page = searchParams.get("page") || "1";
-
+    const language = searchParams.get("language");
     let query = "";
 
     if (level === "good-first") {
@@ -14,11 +14,14 @@ export async function GET(req: Request) {
     } else {
       query = `-label:"good first issue" -label:"help wanted" state:open`;
     }
-
+    if (language) {
+    query += ` language:${language}`;
+    }
     const res = await fetch(
       `https://api.github.com/search/issues?q=${encodeURIComponent(
         query
       )}&per_page=25&page=${page}`,
+
       {
         headers: {
           Authorization: `Bearer ${process.env.GITHUB_TOKEN}`,

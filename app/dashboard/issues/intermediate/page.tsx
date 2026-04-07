@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 import IssueCard from "@/components/IssueCard";
 import IssueSkeleton from "@/components/IssueSkeleton";
 import { useSession } from "next-auth/react";
+import IssueFilters from "@/components/IssueFilters";
 
 function SkeletonGrid() {
   return (
@@ -17,6 +18,7 @@ function SkeletonGrid() {
 
 export default function IntermediatePage() {
   const [bookmarks, setBookmarks] = useState<string[]>([])
+  const [filteredLanguages, setFilteredLanguages] = useState<string[]>([]);
   const [issues, setIssues] = useState<any[]>([]);
   const [page, setPage] = useState(1);
   const [loading, setLoading] = useState(true);
@@ -27,8 +29,12 @@ export default function IntermediatePage() {
     setMounted(true);
   }, []);
 
-  async function fetchIssues(pageNum: number) {
+   async function fetchIssues(pageNum: number) {
     setLoading(true);
+
+    const langParam =filteredLanguages.length > 0
+        ? `&language=${filteredLanguages[0]}`
+        : "";
 
     const res = await fetch(
       `http://localhost:3000/api/github?level=intermediate&page=${pageNum}`
@@ -87,7 +93,7 @@ const handleToggleBookmark = async (issue: any) => {
 };
   useEffect(() => {
     fetchIssues(page);
-  }, [page]);
+  }, [page, filteredLanguages]);
 
 
   if (!mounted) {
@@ -104,7 +110,7 @@ const handleToggleBookmark = async (issue: any) => {
           Requires some experience — good next step after beginner issues
         </p>
       </div>
-
+    <IssueFilters onFilterChange={setFilteredLanguages} />
       {/* Content */}
       {loading ? (
         <SkeletonGrid />

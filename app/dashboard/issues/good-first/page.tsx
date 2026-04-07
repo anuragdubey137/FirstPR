@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 import IssueCard from "@/components/IssueCard";
 import IssueSkeleton from "@/components/IssueSkeleton";
 import { useSession } from "next-auth/react";
+import IssueFilters from "@/components/IssueFilters";
 
 function SkeletonGrid() {
   return (
@@ -17,6 +18,7 @@ function SkeletonGrid() {
 
 export default function GoodFirstPage() {
   const [bookmarks, setBookmarks] = useState<string[]>([])
+  const [filteredLanguages, setFilteredLanguages] = useState<string[]>([]);
   const [issues, setIssues] = useState<any[]>([]);
   const [page, setPage] = useState(1);
   const [loading, setLoading] = useState(true);
@@ -30,8 +32,13 @@ export default function GoodFirstPage() {
   async function fetchIssues(pageNum: number) {
     setLoading(true);
 
+    const langParam =
+      filteredLanguages.length > 0
+        ? `&language=${filteredLanguages[0]}`
+        : "";
+
     const res = await fetch(
-      `http://localhost:3000/api/github?level=good-first&page=${pageNum}`
+      `/api/github?level=good-first&page=${page}${langParam}`
     );
 
     const data = await res.json();
@@ -87,13 +94,11 @@ const handleToggleBookmark = async (issue: any) => {
 };
   useEffect(() => {
     fetchIssues(page);
-  }, [page]);
-
+  }, [page, filteredLanguages]);
   // Prevent hydration mismatch
   if (!mounted) {
     return <SkeletonGrid />;
   }
-  
   return (
     <div className="space-y-6">
       
@@ -104,7 +109,7 @@ const handleToggleBookmark = async (issue: any) => {
           Beginner-friendly issues to start your open source journey
         </p>
       </div>
-
+    <IssueFilters onFilterChange={setFilteredLanguages} />
       {/* Content */}
       {loading ? (
         <SkeletonGrid />
