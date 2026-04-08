@@ -27,6 +27,18 @@ export default function DashboardLayout({ children }: { children: ReactNode }) {
           >
             🏠 Home
           </Link>
+          
+          {/* Open Source Jobs */}
+            <Link
+              href="/dashboard/orgs"
+              className={`block p-2 rounded-lg ${
+                pathname === "/dashboard/orgs"
+                  ? "bg-gray-800"
+                  : "hover:bg-gray-800"
+              }`}
+            >
+              💼 Open Source Jobs
+            </Link>
 
           {/* Issues Dropdown */}
           <div>
