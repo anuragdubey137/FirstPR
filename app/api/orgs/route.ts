@@ -7,7 +7,6 @@ export async function GET() {
 
     const jsonArray = await csv().fromFile(filePath);
 
-    // clean data
     const orgs = jsonArray.map((item: any) => ({
       repo: item["Repository"],
       company: item["Company Name"],

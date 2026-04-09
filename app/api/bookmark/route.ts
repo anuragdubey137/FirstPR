@@ -13,7 +13,6 @@ export async function POST(req: Request) {
       );
     }
 
-    // 1. ensure user exists (githubId = email)
     const user = await prisma.user.upsert({
       where: {
         githubId: userId,
@@ -25,7 +24,6 @@ export async function POST(req: Request) {
       },
     });
 
-    // 2. check existing bookmark (IMPORTANT: use user.id)
     const existing = await prisma.bookmark.findFirst({
       where: {
         userId: user.id,
@@ -33,7 +31,6 @@ export async function POST(req: Request) {
       },
     });
 
-    // 3. toggle remove
     if (existing) {
       await prisma.bookmark.delete({
         where: {
@@ -47,7 +44,6 @@ export async function POST(req: Request) {
       });
     }
 
-    // 4. create bookmark
     const created = await prisma.bookmark.create({
       data: {
         userId: user.id,

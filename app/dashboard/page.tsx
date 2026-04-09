@@ -12,7 +12,6 @@ export default function DashboardPage() {
   const { data: session } = useSession();
   const userId = session?.user?.email;
 
-  // 🔹 Fetch GitHub user data
   useEffect(() => {
     async function fetchData() {
       const res = await fetch("/api/github/user");
@@ -23,7 +22,6 @@ export default function DashboardPage() {
     fetchData();
   }, []);
 
-  // 🔹 Fetch bookmarks
   useEffect(() => {
     async function fetchBookmarks() {
       if (!userId) return;
@@ -37,7 +35,6 @@ export default function DashboardPage() {
     fetchBookmarks();
   }, [userId]);
 
-  // 🔥 Toggle bookmark (REMOVE here)
   const handleToggleBookmark = async (issue: any) => {
     if (!userId) return;
 
@@ -55,13 +52,11 @@ export default function DashboardPage() {
       }),
     });
 
-    // remove from UI instantly
     setBookmarks((prev) =>
       prev.filter((b) => b.issueId !== issue.id)
     );
   };
 
-  // 🔄 Convert bookmarks → IssueCard format
   const formattedIssues = bookmarks.map((b) => ({
     id: b.issueId,
     title: b.issueTitle,

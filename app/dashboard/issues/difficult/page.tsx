@@ -29,7 +29,6 @@ export default function DifficultPage() {
     setMounted(true);
   }, []);
 
-  // ✅ Fetch issues (with language filter)
   async function fetchIssues(pageNum: number) {
     setLoading(true);
 
@@ -88,12 +87,11 @@ export default function DifficultPage() {
     }
   };
 
-  // ✅ Fetch when page OR language changes
   useEffect(() => {
     fetchIssues(page);
   }, [page, filteredLanguages]);
 
-  // ✅ Reset page when filter changes
+
   useEffect(() => {
     setPage(1);
   }, [filteredLanguages]);
@@ -112,7 +110,7 @@ export default function DifficultPage() {
         </p>
       </div>
 
-      {/* ✅ Filters */}
+      {/* Filters */}
       <IssueFilters onFilterChange={setFilteredLanguages} />
 
       {/* Content */}

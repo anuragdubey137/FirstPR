@@ -24,7 +24,7 @@ export default function GoodFirstPage() {
   const [loading, setLoading] = useState(true);
   const [mounted, setMounted] = useState(false);
   const { data: session } = useSession();
-  // Fix hydration issue
+  
   useEffect(() => {
     setMounted(true);
   }, []);
@@ -48,7 +48,7 @@ export default function GoodFirstPage() {
   }
   const userId = session?.user?.email ?? "";
 const handleToggleBookmark = async (issue: any) => {
-  console.log("🔥 CLICKED BOOKMARK");
+  console.log("CLICKED BOOKMARK");
 
   if (!userId) {
     alert("Please login first");
@@ -57,7 +57,7 @@ const handleToggleBookmark = async (issue: any) => {
 
   const id = String(issue.id);
 
-  // optimistic UI update
+
   setBookmarks((prev) =>
     prev.includes(id)
       ? prev.filter((x) => x !== id)
@@ -89,13 +89,13 @@ const handleToggleBookmark = async (issue: any) => {
     }
 
   } catch (err) {
-    console.error("❌ BOOKMARK API ERROR:", err);
+    console.error(" BOOKMARK API ERROR:", err);
   }
 };
   useEffect(() => {
     fetchIssues(page);
   }, [page, filteredLanguages]);
-  // Prevent hydration mismatch
+  
   if (!mounted) {
     return <SkeletonGrid />;
   }
