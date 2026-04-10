@@ -6,18 +6,20 @@ import path from "path";
 const getCA = () => {
   try {
     const caPath = path.join(process.cwd(), "certs", "ca.pem");
-    return fs.readFileSync(caPath).toString();
+    return fs.readFileSync(caPath, "utf8");
   } catch (err) {
     console.warn("CA file not found, skipping SSL CA");
     return undefined;
   }
 };
 
+const ca = getCA();
+
 const adapter = new PrismaPg({
   connectionString: process.env.DATABASE_URL!,
   ssl: {
     rejectUnauthorized: true,
-    ca: getCA(), 
+    ...(ca ? { ca } : {}), 
   },
 });
 
