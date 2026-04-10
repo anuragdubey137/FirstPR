@@ -17,8 +17,6 @@ export default function DashboardClientLayout({
       
       {/* Sidebar */}
       <aside className="w-64 border-r border-gray-800 p-4 space-y-4">
-        
-        <h2 className="text-xl font-bold mb-6">FirstPR</h2>
 
         <nav className="space-y-2">
           

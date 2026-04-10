@@ -12,7 +12,7 @@ export default function Appbar() {
         
         {/* LOGO */}
         <Link href="/" className="text-xl font-bold text-white tracking-tight">
-          🚀 OpenPR
+          🚀 FirstPR
         </Link>
 
         {/* BUTTON */}
