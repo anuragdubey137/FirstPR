@@ -4,7 +4,7 @@ import Link from "next/link";
 import { signIn, signOut, useSession } from "next-auth/react";
 
 export default function Appbar() {
-  const { data: session, status } = useSession();
+  const session = useSession();
 
   return (
     <div className="w-full sticky top-0 z-50 backdrop-blur bg-[#020617]/70 border-b border-gray-800">
@@ -16,25 +16,23 @@ export default function Appbar() {
         </Link>
 
         {/* BUTTON */}
-        {status === "loading" ? (
-          <div className="text-sm text-gray-400">...</div>
-        ) : session ? (
-          <button
-            onClick={() => signOut({ callbackUrl: "/" })}
-            className="px-4 py-1.5 rounded-lg bg-red-600 hover:opacity-90 text-sm transition"
-          >
-            Sign out
-          </button>
-        ) : (
-          <button
-            onClick={() =>
-              signIn("github", { callbackUrl: "/dashboard" })
-            }
-            className="px-4 py-1.5 rounded-lg bg-gradient-to-r from-blue-600 to-indigo-600 hover:opacity-90 text-sm transition"
-          >
-            Sign in
-          </button>
-        )}
+        <div>
+          {session.data?.user ? (
+            <button
+              onClick={() => signOut({ callbackUrl: "/" })}
+              className="px-4 py-1.5 rounded-lg bg-gradient-to-r from-blue-600 to-indigo-600 hover:opacity-90 text-sm transition"
+            >
+              Sign out
+            </button>
+          ) : (
+            <button
+              onClick={() => signIn("github", { callbackUrl: "/dashboard" })}
+              className="px-4 py-1.5 rounded-lg bg-gradient-to-r from-blue-600 to-indigo-600 hover:opacity-90 text-sm transition"
+            >
+              Sign in
+            </button>
+          )}
+        </div>
 
       </div>
     </div>
