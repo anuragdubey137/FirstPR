@@ -1,7 +1,17 @@
+import { authOptions } from "@/lib/auth";
+import { getServerSession } from "next-auth";
+
+
 export async function GET() {
   try {
+    const session = await getServerSession(authOptions);
+
+    if (!session?.accessToken) {
+      return Response.json({ error: "Unauthorized" }, { status: 401 });
+    }
+
     const headers = {
-      Authorization: `Bearer ${process.env.GITHUB_TOKEN}`,
+      Authorization: `Bearer ${session.accessToken}`, // ✅ FIX
     };
 
     const userRes = await fetch("https://api.github.com/user", { headers });

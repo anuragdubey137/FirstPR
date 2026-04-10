@@ -1,10 +1,24 @@
+import { authOptions } from "@/lib/auth";
+import { getServerSession } from "next-auth";
+ 
+
 export async function GET(req: Request) {
   try {
+      const session = await getServerSession(authOptions);
+
+    if (!session) {
+      return Response.json(
+        { error: "Unauthorized" },
+        { status: 401 }
+      );
+    }
+
     const { searchParams } = new URL(req.url);
 
     const level = searchParams.get("level") || "good-first";
     const page = searchParams.get("page") || "1";
     const language = searchParams.get("language");
+
     let query = "";
 
     if (level === "good-first") {
@@ -14,14 +28,15 @@ export async function GET(req: Request) {
     } else {
       query = `-label:"good first issue" -label:"help wanted" state:open`;
     }
+
     if (language) {
-    query += ` language:${language}`;
+      query += ` language:${language}`;
     }
+
     const res = await fetch(
       `https://api.github.com/search/issues?q=${encodeURIComponent(
         query
       )}&per_page=25&page=${page}`,
-
       {
         headers: {
           Authorization: `Bearer ${process.env.GITHUB_TOKEN}`,

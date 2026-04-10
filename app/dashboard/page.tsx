@@ -6,30 +6,41 @@ import IssueCard from "@/components/IssueCard";
 import { useSession } from "next-auth/react";
 
 export default function DashboardPage() {
+  const { data: session, status } = useSession();
+
   const [data, setData] = useState<any>(null);
   const [bookmarks, setBookmarks] = useState<any[]>([]);
 
-  const { data: session } = useSession();
   const userId = session?.user?.email;
 
+
   useEffect(() => {
+    if (status !== "authenticated") return;
+
     async function fetchData() {
-      const res = await fetch("/api/github/user");
-      const json = await res.json();
-      setData(json);
+      try {
+        const res = await fetch("/api/github/user");
+        const json = await res.json();
+        setData(json);
+      } catch (err) {
+        console.error("GitHub fetch error:", err);
+      }
     }
 
     fetchData();
-  }, []);
+  }, [status]);
 
   useEffect(() => {
+    if (!userId) return;
+
     async function fetchBookmarks() {
-      if (!userId) return;
-
-      const res = await fetch(`/api/bookmark?userId=${userId}`);
-      const data = await res.json();
-
-      setBookmarks(data.bookmarks || []);
+      try {
+        const res = await fetch(`/api/bookmark?userId=${userId}`);
+        const data = await res.json();
+        setBookmarks(data.bookmarks || []);
+      } catch (err) {
+        console.error("Bookmark fetch error:", err);
+      }
     }
 
     fetchBookmarks();
@@ -38,23 +49,27 @@ export default function DashboardPage() {
   const handleToggleBookmark = async (issue: any) => {
     if (!userId) return;
 
-    await fetch("/api/bookmark", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        userId,
-        issueId: issue.id,
-        issueTitle: issue.title,
-        issueUrl: issue.html_url,
-        repoName: issue.repository_url.split("/").slice(-2).join("/"),
-      }),
-    });
+    try {
+      await fetch("/api/bookmark", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          userId,
+          issueId: issue.id,
+          issueTitle: issue.title,
+          issueUrl: issue.html_url,
+          repoName: issue.repository_url.split("/").slice(-2).join("/"),
+        }),
+      });
 
-    setBookmarks((prev) =>
-      prev.filter((b) => b.issueId !== issue.id)
-    );
+      setBookmarks((prev) =>
+        prev.filter((b) => b.issueId !== issue.id)
+      );
+    } catch (err) {
+      console.error("Bookmark toggle error:", err);
+    }
   };
 
   const formattedIssues = bookmarks.map((b) => ({
@@ -66,17 +81,22 @@ export default function DashboardPage() {
     comments: 0,
   }));
 
+  if (status === "loading") {
+    return <div className="text-gray-400">Loading session...</div>;
+  }
+
+  if (status === "unauthenticated") {
+    return <div className="text-gray-400">Not authenticated</div>;
+  }
+
   if (!data) {
-    return <div className="text-gray-400">Loading...</div>;
+    return <div className="text-gray-400">Loading dashboard...</div>;
   }
 
   return (
     <div className="space-y-6">
-
       {/* Welcome */}
-      <h1 className="text-2xl font-bold">
-        Welcome back 👋
-      </h1>
+      <h1 className="text-2xl font-bold">Welcome back 👋</h1>
 
       {/* User Info */}
       <div className="flex items-center gap-4">
@@ -94,7 +114,7 @@ export default function DashboardPage() {
       </div>
 
       {/* Stats */}
-      <div className="grid grid-cols-4 gap-4">
+      <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
         <StatsCard title="Repositories" value={data.repos} />
         <StatsCard title="Followers" value={data.followers} />
         <StatsCard title="PRs Raised" value={data.prs} />
@@ -124,7 +144,6 @@ export default function DashboardPage() {
           </div>
         )}
       </div>
-
     </div>
   );
 }
