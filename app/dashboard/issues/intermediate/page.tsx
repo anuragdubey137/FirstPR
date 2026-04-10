@@ -37,7 +37,7 @@ export default function IntermediatePage() {
         : "";
 
     const res = await fetch(
-      `http://localhost:3000/api/github?level=intermediate&page=${pageNum}`
+      `/api/github?level=intermediate&page=${pageNum}${langParam}`
     );
 
     const data = await res.json();
