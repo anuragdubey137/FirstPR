@@ -17,7 +17,7 @@ export default function DashboardClientLayout({
   return (
     <div className="flex h-screen bg-[#0B0F1A] text-white">
       
-      {/* 🔥 MOBILE OVERLAY */}
+      {/*MOBILE OVERLAY */}
       {sidebarOpen && (
         <div
           className="fixed inset-0 bg-black/50 z-40 md:hidden"
@@ -25,7 +25,7 @@ export default function DashboardClientLayout({
         />
       )}
 
-      {/* 🔥 SIDEBAR */}
+      {/*SIDEBAR */}
       <aside
         className={`
           fixed md:static top-0 left-0 z-50 h-full w-64 bg-[#0B0F1A] border-r border-gray-800 p-4
@@ -113,10 +113,10 @@ export default function DashboardClientLayout({
         </nav>
       </aside>
 
-      {/* 🔥 MAIN CONTENT */}
+      {/*MAIN CONTENT */}
       <div className="flex-1 flex flex-col w-full">
 
-        {/* 🔥 TOP BAR */}
+        {/*TOP BAR */}
         <div className="flex items-center justify-between p-4 border-b border-gray-800 md:hidden">
           <button
             onClick={() => setSidebarOpen(true)}
