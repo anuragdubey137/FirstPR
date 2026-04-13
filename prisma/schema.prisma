@@ -14,55 +14,30 @@ datasource db {
 }
 
 model User {
-  id String  @id @default(cuid())
-  githubId String @unique
-  username String
-  email String?
-  avatarURL String?
-  createdAt   DateTime @default(now())
+  id         String   @id @default(cuid())
+  githubId   String   @unique
+  username   String
+  email      String?
+  avatarURL  String?
+  createdAt  DateTime @default(now())
 
-  preference Preference?
   bookmarks  Bookmark[]
 }
 
-model Preference {
-  id String  @id @default(cuid())
-  userId String @unique
-  experience ExperienceLevel
-  techStack String[]
-
-  user User @relation(fields: [userId], references: [id])
-}
-
 model Bookmark {
-  id String @id @default(cuid())
-  userId String
+  id          String   @id @default(cuid())
+  userId      String
 
-  issueId String
-  issueTitle String
-  issueUrl String
+  issueId     String
+  issueTitle  String
+  issueUrl    String
 
-  repoName String
-  repoUrl String?
+  repoName    String
 
-  status BookmarkStatus @default(SAVED)
+  createdAt   DateTime @default(now())
 
-  createdAt DateTime @default(now())
-
-  user User @relation(fields: [userId], references: [id])
+  user        User @relation(fields: [userId], references: [id])
 
   @@unique([userId, issueId])
   @@index([userId])
-}
-
-enum BookmarkStatus {
-  SAVED
-  WORKING
-  COMPLETED
-}
-
-enum ExperienceLevel {
-  BEGINNER
-  INTERMEDIATE
-  EXPERT
 }
